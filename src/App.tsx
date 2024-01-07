@@ -1,7 +1,11 @@
-const Square = () => {
+type SquareProps = {
+  num: number
+}
+
+const Square: React.FC<SquareProps> = ({num}) => {
   return(
     <>
-      <button></button>
+      <button>{num}</button>
     </>
   )
 }
@@ -9,7 +13,7 @@ const Square = () => {
 const Board = () => {
   return(
     <>
-      <Square />
+      <Square num={0}/>
     </>
   )
 }
