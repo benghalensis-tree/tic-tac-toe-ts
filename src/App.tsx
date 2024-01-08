@@ -22,6 +22,9 @@ type BoardProps = {
 const Board: React.FC<BoardProps> = ({ squares, xIsNext, handlePlay }) => {
 
   const handleClick = (i: number) => {
+    if (squares[i]) {
+      return;
+    }
     const newSquares = squares.slice();
     if (xIsNext) {
       newSquares[i] = 'X'
