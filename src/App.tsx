@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 type SquareProps = {
-  value: string
+  value: string | null
   handleClick: () => void
 }
 
@@ -13,15 +13,22 @@ const Square: React.FC<SquareProps> = ({value, handleClick}) => {
   )
 }
 
-const Board = () => {
+type BoardProps = {
+  squares: (string | null)[];
+  xIsNext: boolean;
+  handlePlay: (newSquares: (string | null)[]) => void
+}
 
-  const [squares, setSquares] = useState(Array(9).fill(null));
+const Board: React.FC<BoardProps> = ({ squares, xIsNext, handlePlay }) => {
 
   const handleClick = (i: number) => {
     const newSquares = squares.slice();
-    newSquares[i] = 'X'
-    setSquares(newSquares);
-    console.log('clicked')
+    if (xIsNext) {
+      newSquares[i] = 'X'
+    } else {
+      newSquares[i] = 'O'
+    }
+    handlePlay(newSquares);
   }
 
   return(
@@ -45,4 +52,21 @@ const Board = () => {
   )
 }
 
-export default Board;
+const Game = () => {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const currentSquares = history[history.length - 1];
+
+  const handlePlay = (newSquares: (string | null)[]) => {
+    setHistory([...history, newSquares])
+    setXIsNext(!xIsNext);
+  }
+
+  return (
+    <>
+      <Board squares={currentSquares} xIsNext={xIsNext} handlePlay={handlePlay}/>
+    </>
+  )
+}
+
+export default Game;
