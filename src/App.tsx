@@ -2,9 +2,9 @@ import { useState } from "react"
 import Board from "./components/Board";
 
 const Game = () => {
-  const [xIsNext, setXIsNext] = useState(true);
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [currentMove, setCurrentMove] = useState(0);
+  const [xIsNext, setXIsNext] = useState<boolean>(true);
+  const [history, setHistory] = useState<(string | null)[][]>([Array(9).fill(null)]);
+  const [currentMove, setCurrentMove] = useState<number>(0);
   const currentSquares = history[currentMove];
 
   const handlePlay = (newSquares: (string | null)[]) => {
@@ -13,10 +13,12 @@ const Game = () => {
     setCurrentMove(nextHistory.length -1);
     setXIsNext(!xIsNext);
   }
+
   const jumpTo = (nextMove: number) => {
     setCurrentMove(nextMove);
     setXIsNext(nextMove % 2 === 0);
   }
+  
   const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
