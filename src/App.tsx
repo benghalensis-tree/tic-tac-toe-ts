@@ -18,7 +18,13 @@ const Game = () => {
     setCurrentMove(nextMove);
     setXIsNext(nextMove % 2 === 0);
   }
-  
+
+  const reStart = () => {
+    setXIsNext(true);
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
+  }
+
   const moves = history.map((squares, move) => {
     let description;
     if (move > 0) {
@@ -40,6 +46,9 @@ const Game = () => {
       </div>
       <div>
         {moves}
+      </div>
+      <div>
+        <button onClick={reStart}>はじめから</button>
       </div>
     </>
   )
