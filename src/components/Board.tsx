@@ -2,18 +2,20 @@ import React from 'react'
 import Square from './Square';
 import { useState } from 'react';
 
-const Board = () => {
-  const [ squares, setSquares ] = useState(Array(9).fill(null));
-  const [ player, setPlayer ] = useState(true);
-
+type BoardProps = {
+  squares: (string|null)[];
+  player: boolean;
+  handlePlay: (newSquares: (string|null)[]) => void;
+}
+const Board: React.FC<BoardProps>= ({squares, player, handlePlay}) => {
+  
   const handleClick = (i: number) => {
     if(squares[i]){
       return;
     }
     const newSquares = [...squares]
     newSquares[i] = player ? 'X' : 'O';
-    setSquares(newSquares);
-    setPlayer(!player);
+    handlePlay(newSquares);
   }
 
   // const boardMap = squares.map(
