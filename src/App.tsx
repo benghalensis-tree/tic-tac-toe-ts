@@ -1,6 +1,7 @@
 import React from 'react'
 import Board from './components/Board';
 import { useState } from 'react';
+import { calculateWinner } from './helper';
 
 const App = () => {
   const [ history, setHistory ] = useState([Array(9).fill(null)]);
@@ -32,6 +33,7 @@ const App = () => {
 
   return (
     <div>
+      {calculateWinner(squares) ? (player ? "Xの勝ち" : 'Oの勝ち') :""}
       <Board squares={squares} player={player} handlePlay={handlePlay}/>
       {historyButton}
     </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import Square from './Square';
-import { useState } from 'react';
+import { calculateWinner } from '../helper';
 
 type BoardProps = {
   squares: (string|null)[];
@@ -10,7 +10,7 @@ type BoardProps = {
 const Board: React.FC<BoardProps>= ({squares, player, handlePlay}) => {
   
   const handleClick = (i: number) => {
-    if(squares[i]){
+    if(squares[i] || calculateWinner(squares)){
       return;
     }
     const newSquares = [...squares]
