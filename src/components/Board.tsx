@@ -1,74 +1,47 @@
-import Square from "./Square"
+import React from 'react'
+import Square from './Square';
+import { useState } from 'react';
 
-type BoardProps = {
-  squares: (string | null)[];
-  xIsNext: boolean;
-  handlePlay: (newSquares: (string | null)[]) => void
-}
-
-const Board: React.FC<BoardProps> = ({ squares, xIsNext, handlePlay }) => {
+const Board = () => {
+  const [ squares, setSquares ] = useState(Array(9).fill(null));
+  const [ player, setPlayer ] = useState(true);
 
   const handleClick = (i: number) => {
-    if (squares[i] || calculateWinner(squares)) {
+    if(squares[i]){
       return;
     }
-    const newSquares = squares.slice();
-    if (xIsNext) {
-      newSquares[i] = 'X'
-    } else {
-      newSquares[i] = 'O'
-    }
-    handlePlay(newSquares);
+    const newSquares = [...squares]
+    newSquares[i] = player ? 'X' : 'O';
+    setSquares(newSquares);
+    setPlayer(!player);
   }
 
-  const winner = calculateWinner(squares);
-  let status: string;
-  if (winner) {
-    status = "Winner: " + winner;
-  } else {
-    status = "Next player: " + (xIsNext ? "X" : "O");
-  }
-
-  return(
+  // const boardMap = squares.map(
+  //   (string, index) => {
+  //     return(
+  //       <Square square={string} handleClick={() => {handleClick(index)}}/>
+  //     )
+  //   }
+  // )
+  return (
     <>
-      {status}
       <div className='board-row'>
-        <Square value={squares[0]} handleClick={() => handleClick(0)}/>
-        <Square value={squares[1]} handleClick={() => handleClick(1)}/>
-        <Square value={squares[2]} handleClick={() => handleClick(2)}/>
+        <Square square={squares[0]} handleClick={() => {handleClick(0)}}/>
+        <Square square={squares[1]} handleClick={() => {handleClick(1)}}/>
+        <Square square={squares[2]} handleClick={() => {handleClick(2)}}/>
       </div>
       <div className='board-row'>
-        <Square value={squares[3]} handleClick={() => handleClick(3)}/>
-        <Square value={squares[4]} handleClick={() => handleClick(4)}/>
-        <Square value={squares[5]} handleClick={() => handleClick(5)}/>
+        <Square square={squares[3]} handleClick={() => {handleClick(3)}}/>
+        <Square square={squares[4]} handleClick={() => {handleClick(4)}}/>
+        <Square square={squares[5]} handleClick={() => {handleClick(5)}}/>
       </div>
       <div className='board-row'>
-        <Square value={squares[6]} handleClick={() => handleClick(6)}/>
-        <Square value={squares[7]} handleClick={() => handleClick(7)}/>
-        <Square value={squares[8]} handleClick={() => handleClick(8)}/>
+        <Square square={squares[6]} handleClick={() => {handleClick(6)}}/>
+        <Square square={squares[7]} handleClick={() => {handleClick(7)}}/>
+        <Square square={squares[8]} handleClick={() => {handleClick(8)}}/>
       </div>
     </>
   )
-}
-
-const calculateWinner = (squares: (string | null)[]) => {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
 }
 
 export default Board;

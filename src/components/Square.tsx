@@ -1,13 +1,15 @@
+import React from 'react'
+
 type SquareProps = {
-  value: string | null
+  square: string|null
   handleClick: () => void
 }
 
-const Square: React.FC<SquareProps> = ({value, handleClick}) => {
-  return(
-    <>
-      <button className='square' onClick={handleClick}>{value}</button>
-    </>
+const Square: React.FC<SquareProps> = ({square, handleClick}) => {
+  return (
+    <div>
+      <button className='square' onClick={handleClick}>{square}</button>
+    </div>
   )
 }
 
