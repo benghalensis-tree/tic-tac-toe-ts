@@ -33,7 +33,7 @@ const App = () => {
 
   return (
     <div>
-      {calculateWinner(squares) ? (player ? "Xの勝ち" : 'Oの勝ち') :""}
+      {calculateWinner(squares) ? (player ? "Oの勝ち" : 'Xの勝ち') :""}
       <Board squares={squares} player={player} handlePlay={handlePlay}/>
       {historyButton}
     </div>
